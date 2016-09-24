@@ -1,11 +1,16 @@
-//#include <conio.h>
+
 #include <iostream>
 using namespace std;
 
-// Minh luoi truyen doi so vao ham nen khai bao global lun
-int b[6],c[6],a[6],n, stt;
-static int cnt=0;
+int b[100],c[100],a[100],n;
+static int stt; /* bien luu so thu tu can in ra*/
+static int m=1; /* luu so con so can thay doi */
+static int cnt;
+
 void Try(int);
+void print(void);
+void print2(void);
+int factorial(int n)
 
 int factorial(int n) {
    int f;
@@ -16,42 +21,27 @@ int factorial(int n) {
    return f;
 }
 
-int npr(int n,int r) {
-   return factorial(n)/factorial(n-r);
-}
-
-void print(void);
-
-int main()
+void Try(int j, int st)
 {
-
-    //cout<<"Nhap n va stt:  ";
-     cin>>n>>stt;
-     if(stt>npr(n,n)) cout<<"-1";
-     else{
-     for ( int i = 1 ; i<=n; i++)
-          a[i]=i;
-     Try(1);
-}
-//      getch();
-      return 0;
-}
-
-void Try(int j)
-{
-     for ( int i = 1; i<=n; i++)
+     for ( int i = 1; i<=m; i++)
      {
          if ( b[i] == 0 )
          {
-              c[j] = a[i];// a[] la mang dau vao, c[] la mang dau ra
+              c[j] = a[i];
               b[i] = 1;
-              if ( j == n) {
-              cnt++; if(cnt==stt){
-              print();i=n;
-              }
-             // break;
-              }
-              else Try(j+1);// Ham goi lai ham
+              if ( j == m)
+                {
+                    cnt++;
+                    if(cnt==st) {
+
+                    print2();
+                    print();
+                    i=m+1; // do not excutive next for loop//
+                    }
+                else{
+                }
+                }
+              else Try(j+1, st);// Ham goi lai ham
               b[i] = 0;
          }
      }
@@ -59,9 +49,35 @@ void Try(int j)
 
 void print(void)
 {
-     for (int i = 1; i<=n; i++)
+     for (int i = 1; i<=m; i++)
      {
-         cout<<c[i]<<" ";
+         cout<<c[i]+n-m<<" ";
       }
 
+}
+
+void print2(void)   // in ra chuoi cac so khong bi thay doi//
+{
+for (int i = 1; i<=n-m; i++)
+  {
+cout<<i<<" ";
+  }
+}
+
+int main()
+{
+
+     cin>>n>>stt;
+
+while(factorial(m)<stt){
+    m++;
+}
+if(m>n)
+cout<<"-1";
+else{
+
+     for ( int i = 1 ; i<=m; i++)
+          a[i]=i;
+Try(1,stt);}
+return 0;
 }
